@@ -1,0 +1,16 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}
+Edit Product
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="card shadow mx-5 my-5 p-5">
+            <h1>Edit Product</h1>
+    
+            {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+            
+        </div>
+    </div>
+{% endblock %}

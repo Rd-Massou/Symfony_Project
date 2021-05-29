@@ -1,0 +1,42 @@
+<nav class="navbar shadow navbar-expand-lg navbar-dark bg-dark">
+    <div class="container container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('IMG/Logo.png') }}" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <span class="navbar-brand mb-0 h1">BEM-Store</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == 'app_homepage' ? 'active' }}" aria-current="page" href="{{ path('app_homepage') }}">Home</a>
+                </li>
+                {% if app.user %}
+                {% if "ROLE_ADMIN" == user.roles %}
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == 'app_dashboard' ? 'active' }}" aria-current="page" href="{{ path('app_dashboard') }}">Dashboard</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == 'app_products' ? 'active' }}" href="{{ path('app_products') }}">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == '' ? 'active' }}" href="#">Transactions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == '_list' ? 'active' }}" href="#">Stock</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == 'app_logout' ? 'active' }}" href="{{ path('app_logout') }}">Sign Out</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link {{ app.request.get('_route') == 'app_login' ? 'active' }}" href="{{ path('app_login') }}">Sign In</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

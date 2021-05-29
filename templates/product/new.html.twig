@@ -1,0 +1,15 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}
+New Product
+{% endblock %}
+
+{% block body %}
+<div class="container mx-5 p-4">
+    <div class="card shadow mt-4 p-4 row justify-content-center align-self-center">
+        <h1>Create new Product</h1>
+    
+        {{ include('product/_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}

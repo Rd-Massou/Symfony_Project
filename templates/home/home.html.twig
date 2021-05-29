@@ -2,6 +2,67 @@
 
 {% block title %}Home{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/home.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>Home Page</h1>
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active"
+            style="height: 400px; background: url('IMG/Products.jpg') no-repeat fixed center/cover;">
+            <div class="carousel-caption d-none d-md-block">
+                <h1 class="text-uppercase">Be Efficient & Productive</h1>
+                <h3 class="fw-light">Manage you store’s products with ease</h3>
+                {% if app.user == null %}
+                <a class="btn btn-warning" href="{{ path('app_login') }}">Sign In</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container my-4">
+    <div class="card shadow mx-5 p-3">
+        <h1 class="text-center">Added Value</h1>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <div class="col">
+                <div class="card">
+                    <img src="IMG/Income.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Growth</h5>
+                        <p class="card-text">Make your store’s income grow day after day</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="IMG/Storage.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Precision</h5>
+                        <p class="card-text">Manage your products storage with precision and less worries</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="IMG/Transaction.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Ease and Efficiency</h5>
+                        <p class="card-text">Validate all your transactions becomes easier and more efficient</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card">
+                    <img src="IMG/Virtual_store.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Virtualized Environment</h5>
+                        <p class="card-text">Everything about your store management is virtualized and more practical
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
