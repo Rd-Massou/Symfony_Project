@@ -13,7 +13,7 @@
             <tbody>
                 <tr>
                     <th>Image</th>
-                    <td>{{ product.image }}</td>
+                    <td><img src="{{ asset('uploads/test.png') }}" height="250px"></td>
                 </tr>
                 <tr>
                     <th>Price</th>
@@ -22,6 +22,10 @@
                 <tr>
                     <th>Description</th>
                     <td>{{ product.description }}</td>
+                </tr>
+                <tr>
+                    <th>Category</th>
+                    <td>{{ product.category }}</td>
                 </tr>
                 <tr>
                     <th>CreatedAt</th>

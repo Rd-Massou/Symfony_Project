@@ -14,11 +14,13 @@
                     <a class="nav-link {{ app.request.get('_route') == 'app_homepage' ? 'active' }}" aria-current="page" href="{{ path('app_homepage') }}">Home</a>
                 </li>
                 {% if app.user %}
-                {% if "ROLE_ADMIN" == user.roles %}
+                {% for role in user.roles %}
+                {% if role == "ROLE_ADMIN" %}
                 <li class="nav-item">
                     <a class="nav-link {{ app.request.get('_route') == 'app_dashboard' ? 'active' }}" aria-current="page" href="{{ path('app_dashboard') }}">Dashboard</a>
                 </li>
                 {% endif %}
+                {% endfor %}
                 <li class="nav-item">
                     <a class="nav-link {{ app.request.get('_route') == 'app_products' ? 'active' }}" href="{{ path('app_products') }}">Products</a>
                 </li>

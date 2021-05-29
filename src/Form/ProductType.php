@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -27,6 +29,9 @@ class ProductType extends AbstractType
             ]])
             ->add('description', TextareaType::class, ['required' => false, "attr" => [
                 "class" => "form-control mb-2"
+            ]])
+            ->add('category', EntityType::class, ['class' => Category::class, "attr" => [
+                "class" => "form-select mb-2",
             ]])
         ;
     }
