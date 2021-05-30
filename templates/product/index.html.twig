@@ -7,25 +7,27 @@
     <div class="card shadow my-4 p-4 mx-5" style="max-height: 81vh; overflow: scroll;">
         <h1>Product List</h1>
 
-        <div class="table-responsive p-2 rounded" style="border: solid 1px #AAA">
+        <div class="table-responsive mb-2 p-2 rounded" style="border: solid 1px #AAA">
             <table class="table table-sm">
                 <tbody>
                     {% for product in products %}
                     <tr>
-                        <td><img src="{{ asset('uploads/test.png') }}" height="45px"></td>
+                        <td><img src="{{ asset('uploads/'~product.image) }}" height="45px"></td>
                         <td>{{ product.title }}</td>
                         <td>{{ product.price }}</td>
                         <td>{{ product.description }}</td>
                         <td>{{ product.category }}</td>
                         <td>
                             <div class="d-flex">
-                                <a class="btn btn-sm btn-primary" href="{{ path('app_products_show', {'id': product.id}) }}">Show</a>
-                            {% for role in user.roles %}
-                            {% if role == "ROLE_ADMIN" %}
-                            <a class="btn btn-sm mx-1 btn-outline-warning" href="{{ path('app_products_edit', {'id': product.id}) }}">Edit</a>
-                            {{ include('product/_delete_form.html.twig') }}
-                            {% endif %}
-                            {% endfor %}
+                                <a class="btn btn-sm btn-primary"
+                                    href="{{ path('app_products_show', {'id': product.id}) }}">Show</a>
+                                {% for role in user.roles %}
+                                {% if role == "ROLE_ADMIN" %}
+                                <a class="btn btn-sm mx-1 btn-outline-warning"
+                                    href="{{ path('app_products_edit', {'id': product.id}) }}">Edit</a>
+                                {{ include('product/_delete_form.html.twig') }}
+                                {% endif %}
+                                {% endfor %}
                             </div>
                         </td>
                     </tr>
@@ -40,7 +42,7 @@
 
         {% for role in user.roles %}
         {% if role == "ROLE_ADMIN" %}
-        <a class="btn btn-success mt-2 mx-auto w-25" href="{{ path('app_products_new') }}">Create New</a>
+        <a class="btn btn-success mx-auto w-25" href="{{ path('app_products_new') }}">Create New</a>
         {% endif %}
         {% endfor %}
     </div>

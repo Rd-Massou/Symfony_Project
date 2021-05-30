@@ -1,4 +1,4 @@
-<nav class="navbar shadow navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar shadow navbar-expand-lg navbar-dark bg-dark" style="z-index: 1100;">
     <div class="container container-fluid">
         <a class="navbar-brand" href="#">
             <img src="{{ asset('IMG/Logo.png') }}" alt="" width="30" height="24" class="d-inline-block align-text-top">
@@ -25,10 +25,10 @@
                     <a class="nav-link {{ app.request.get('_route') == 'app_products' ? 'active' }}" href="{{ path('app_products') }}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ app.request.get('_route') == '' ? 'active' }}" href="#">Transactions</a>
+                    <a class="nav-link {{ app.request.get('_route') == 'app_sales' ? 'active' }}" href="{{ path('app_sales') }}">Transactions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ app.request.get('_route') == '_list' ? 'active' }}" href="#">Stock</a>
+                    <a class="nav-link {{ app.request.get('_route') == '_list' ? 'active' }}" href="#">Storage</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ app.request.get('_route') == 'app_logout' ? 'active' }}" href="{{ path('app_logout') }}">Sign Out</a>

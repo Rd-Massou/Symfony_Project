@@ -1,0 +1,48 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}Sale {{ sale.id }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card shadow my-4 p-4 mx-5">
+        <h1>Sale N°{{ sale.id }}</h1>
+
+        <div class="table-responsive p-2 mb-2 rounded" style="border: solid 1px #AAA">
+            <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <th>Product</th>
+                    <td><img class="mb-3" src="{{ asset('uploads/'~sale.product.image) }}" height="250">
+                        <br>
+                        {{ sale.product }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Quantity</th>
+                    <td>{{ sale.quantity }}</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td>{{ sale.total }}</td>
+                </tr>
+                <tr>
+                    <th>CreatedAt</th>
+                    <td>{{ sale.createdAt ? sale.createdAt|date('Y-m-d') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="d-flex">
+            <a class="btn btn-primary" href="{{ path('app_sales') }}">Back To List</a>
+            {% for role in user.roles %}
+            {% if role == "ROLE_ADMIN" %}
+            <a class="btn btn-outline-warning mx-1"
+                href="{{ path('app_sales_edit', {'id': sale.id}) }}">Edit</a>
+                {{ include('transactions/sale/_delete_form.html.twig') }}
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

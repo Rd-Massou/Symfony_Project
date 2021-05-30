@@ -21,7 +21,7 @@ class ProductType extends AbstractType
             ->add('title', TextType::class, ["attr" => [
                 "class" => "form-control mb-2"
             ]])
-            ->add('image', FileType::class, ['required' => false, "attr" => [
+            ->add('image', FileType::class, ['data_class' => null, 'required' => false, "attr" => [
                 "class" => "form-control mb-2",
             ]])
             ->add('price', NumberType::class, ["attr" => [

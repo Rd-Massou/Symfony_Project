@@ -1,0 +1,13 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}New Sale{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card shadow my-4 p-4 mx-5">
+        <h1>New Sale</h1>
+
+        {{ include('transactions/sale/_form.html.twig') }}
+    </div>
+</div>
+{% endblock %}
