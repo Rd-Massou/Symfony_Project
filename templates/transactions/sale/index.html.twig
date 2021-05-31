@@ -16,13 +16,13 @@
                 <tbody>
                     {% for sale in sales %}
                     <tr>
-                        <td><img src="{{ asset('uploads/'~sale.product.image) }}" height="45px"></td>
-                        <td>{{ sale.createdAt ? sale.createdAt|date('Y-m-d') : '' }}</td>
-                        <td>{{ sale.product }}</td>
-                        <td>{{ sale.total }}</td>
-                        <td>{{ sale.quantity }}</td>
+                        <td class="text-center"><img src="{{ asset('uploads/'~sale.product.image) }}" height="45px"></td>
+                        <td class="text-center">{{ sale.createdAt ? sale.createdAt|date('Y-m-d') : '' }}</td>
+                        <td class="text-center">{{ sale.product }}</td>
+                        <td class="text-center">{{ sale.total }}</td>
+                        <td class="text-center">{{ sale.quantity }}</td>
                         <td>
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-center align-items-center">
                                 <a class="btn btn-sm btn-primary"
                                     href="{{ path('app_sales_show', {'id': sale.id}) }}">Show</a>
                                     {% for role in user.roles %}

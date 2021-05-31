@@ -5,42 +5,46 @@
 {% block body %}
 <div class="container">
     <div class="card shadow my-4 p-4 mx-5">
-    <h1>Purchase N°{{ purchase.id }}</h1>
+        <h1>Purchase N°{{ purchase.id }}</h1>
 
-    <div class="table-responsive p-2 mb-2 rounded" style="border: solid 1px #AAA">
-        <table class="table table-sm">
-        <tbody>
-            <th>Product</th>
-                    <td><img class="mb-3" src="{{ asset('uploads/'~purchase.product.image) }}" height="250">
-                        <br>
-                        {{ purchase.product }}
+        <div class="table-responsive mb-2 p-2 rounded">
+            <table class="table table-sm">
+                <tbody>
+                    <th>Product</th>
+                    <td class="text-center">
+                        <p class="text-uppercase fs-3 fw-bolder">{{ purchase.product }}</p>
+                        <img class="mb-3" src="{{ asset('uploads/'~purchase.product.image) }}" height="250">
                     </td>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ purchase.quantity }}</td>
-            </tr>
-            <tr>
-                <th>Total</th>
-                <td>{{ purchase.total }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ purchase.createdAt ? purchase.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-    </div>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ purchase.product.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Quantity</th>
+                        <td>{{ purchase.quantity }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <td>{{ purchase.total }}</td>
+                    </tr>
+                    <tr>
+                        <th>CreatedAt</th>
+                        <td>{{ purchase.createdAt ? purchase.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <div class="d-flex">
-        <a class="btn btn-primary" href="{{ path('app_purchases') }}">Back To List</a>
-        {% for role in user.roles %}
-        {% if role == "ROLE_ADMIN" %}
-        <a class="btn btn-outline-warning mx-1"
-            href="{{ path('app_purchases_edit', {'id': purchase.id}) }}">Edit</a>
+        <div class="d-flex">
+            <a class="btn btn-primary" href="{{ path('app_purchases') }}">Back To List</a>
+            {% for role in user.roles %}
+            {% if role == "ROLE_ADMIN" %}
+            <a class="btn btn-outline-warning mx-1"
+                href="{{ path('app_purchases_edit', {'id': purchase.id}) }}">Edit</a>
             {{ include('transactions/purchase/_delete_form.html.twig') }}
-        {% endif %}
-        {% endfor %}
+            {% endif %}
+            {% endfor %}
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}

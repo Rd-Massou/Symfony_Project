@@ -3,8 +3,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-<div class="bg-transparent d-flex align-items-center justify-content-center" style="height: 93vh;">
-    <div class="bg-dark p-4 bd-highlight col-example card shadow w-25 text-center">
+<div class="bg-transparent d-flex align-items-center justify-content-center w-100" style="height: 93vh; min-width: 375px;">
+    <div class="bg-dark p-4 bd-highlight col-example card shadow w-25 text-center" style="min-width: 18rem;">
         <form method="post">
             {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

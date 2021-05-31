@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SaleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SaleRepository::class)
@@ -15,6 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Sale
 {
     /**
+     * @ORM\Column(type="integer")
+     * @Assert\PositiveOrZero
+     */
+    private $oldQuantity;
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -23,11 +28,13 @@ class Sale
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\PositiveOrZero
      */
     private $total;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\PositiveOrZero
      */
     private $quantity;
 
@@ -71,6 +78,18 @@ class Sale
         return $this;
     }
 
+    public function getOldQuantity(): ?int
+    {
+        return $this->oldQuantity;
+    }
+
+    public function setOldQuantity(int $quantity): self
+    {
+        $this->oldQuantity = $quantity;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -100,7 +119,7 @@ class Sale
      */
     public function updateTimestamps()
     {
-        if($this->getCreatedAt() === null){
+        if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new \DateTimeImmutable());
         }
     }

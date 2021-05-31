@@ -16,13 +16,13 @@
                 <tbody>
                     {% for purchase in purchases %}
                     <tr>
-                        <td><img src="{{ asset('uploads/'~purchase.product.image) }}" height="45px"></td>
-                        <td>{{ purchase.createdAt ? purchase.createdAt|date('Y-m-d') : '' }}</td>
-                        <td>{{ purchase.product }}</td>
-                        <td>{{ purchase.total }}</td>
-                        <td>{{ purchase.quantity }}</td>
+                        <td  class="text-center"><img src="{{ asset('uploads/'~purchase.product.image) }}" height="45px"></td>
+                        <td  class="text-center">{{ purchase.createdAt ? purchase.createdAt|date('Y-m-d') : '' }}</td>
+                        <td  class="text-center">{{ purchase.product }}</td>
+                        <td  class="text-center">{{ purchase.total }}</td>
+                        <td  class="text-center">{{ purchase.quantity }}</td>
                         <td>
-                            <div class="d-flex">
+                            <div class="d-flex justify-content-center align-items-center">
                                 <a class="btn btn-sm btn-primary"
                                     href="{{ path('app_purchases_show', {'id': purchase.id}) }}">Show</a>
                                 {% for role in user.roles %}

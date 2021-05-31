@@ -10,9 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
- * @Route("/product")
+ * @Route("/products")
  */
 class ProductController extends AbstractController
 {
@@ -28,21 +31,39 @@ class ProductController extends AbstractController
     }
 
     /**
-     * isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_ADMIN")
      * @Route("/new", name="app_products_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, SluggerInterface $slugger): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $productImage = $form->get('image')->getData();
+            if ($productImage) {
+                $originalImageName = pathinfo($productImage->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeImageName = $slugger->slug($originalImageName);
+                $newImageName = $safeImageName.'-'.uniqid().'.'.$productImage->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $productImage->move(
+                        $this->getParameter('uploads_directory'),
+                        $newImageName
+                    );
+                } catch (FileException $e) {
+                    
+                }
+                $product->setImage($newImageName);
+            }
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_products');
+            return $this->redirectToRoute('app_storage_new');
         }
 
         return $this->render('product/new.html.twig', [
@@ -64,15 +85,33 @@ class ProductController extends AbstractController
     }
 
     /**
-     * isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_ADMIN")
      * @Route("/{id}/edit", name="app_products_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Product $product): Response
+    public function edit(Request $request, Product $product, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $productImage = $form->get('image')->getData();
+            if ($productImage) {
+                $originalImageName = pathinfo($productImage->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeImageName = $slugger->slug($originalImageName);
+                $newImageName = $safeImageName.'-'.uniqid().'.'.$productImage->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $productImage->move(
+                        $this->getParameter('uploads_directory'),
+                        $newImageName
+                    );
+                } catch (FileException $e) {
+                    
+                }
+                $product->setImage($newImageName);
+            }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_products');
@@ -86,7 +125,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_ADMIN")
      * @Route("/{id}", name="app_products_delete", methods={"POST"})
      */
     public function delete(Request $request, Product $product): Response

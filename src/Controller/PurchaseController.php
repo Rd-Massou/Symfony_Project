@@ -37,7 +37,10 @@ class PurchaseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $purchase->setTotal($purchase->getProduct()->getPrice() * $purchase->getQuantity());
+            $storage = $purchase->getProduct()->getStorage();
+            $storage->setQuantity($storage->getQuantity() + $purchase->getQuantity());
+            $purchase->setOldQuantity($purchase->getQuantity());
+            $purchase->setTotal($form->get('supplyPrice')->getData() * $purchase->getQuantity());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($purchase);
             $entityManager->flush();
@@ -64,16 +67,21 @@ class PurchaseController extends AbstractController
     }
 
     /**
-     * isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_ADMIN")
      * @Route("/{id}/edit", name="app_purchases_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Purchase $purchase): Response
     {
         $form = $this->createForm(PurchaseType::class, $purchase);
         $form->handleRequest($request);
+        $storage = $purchase->getProduct()->getStorage();
+        $storage->setQuantity($storage->getQuantity() - $purchase->getQuantity());
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $purchase->setTotal($purchase->getProduct()->getPrice() * $purchase->getQuantity());
+            $storage = $purchase->getProduct()->getStorage();
+            $storage->setQuantity($storage->getQuantity() + $purchase->getOldQuantity() - $purchase->getQuantity());
+            $this->oldQuantity = $purchase->getQuantity();
+            $purchase->setTotal($form->get('supplyPrice')->getData() * $purchase->getQuantity());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('app_purchases');
@@ -87,12 +95,14 @@ class PurchaseController extends AbstractController
     }
 
     /**
-     * isGranted("ROLE_ADMIN")
+     * @isGranted("ROLE_ADMIN")
      * @Route("/{id}", name="app_purchases_delete", methods={"POST"})
      */
     public function delete(Request $request, Purchase $purchase): Response
     {
         if ($this->isCsrfTokenValid('delete'.$purchase->getId(), $request->request->get('_token'))) {
+            $storage = $purchase->getProduct()->getStorage();
+            $storage->setQuantity($storage->getQuantity() - $purchase->getQuantity());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($purchase);
             $entityManager->flush();

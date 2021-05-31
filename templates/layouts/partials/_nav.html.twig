@@ -22,13 +22,36 @@
                 {% endif %}
                 {% endfor %}
                 <li class="nav-item">
-                    <a class="nav-link {{ app.request.get('_route') == 'app_products' ? 'active' }}" href="{{ path('app_products') }}">Products</a>
+                    <a class="nav-link  {% if app.request.get('_route') == 'app_products' %} active 
+                                        {% elseif app.request.get('_route') == 'app_products_new' %} active
+                                        {% elseif app.request.get('_route') == 'app_products_edit' %} active
+                                        {% elseif app.request.get('_route') == 'app_products_show' %} active
+                                        {% elseif app.request.get('_route') == 'app_products_delete' %} active
+                                        {% endif %}" 
+                    href="{{ path('app_products') }}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ app.request.get('_route') == 'app_sales' ? 'active' }}" href="{{ path('app_sales') }}">Transactions</a>
+                    <a class="nav-link  {% if app.request.get('_route') == 'app_sales' %} active 
+                                        {% elseif app.request.get('_route') == 'app_sales_new' %} active
+                                        {% elseif app.request.get('_route') == 'app_sales_edit' %} active
+                                        {% elseif app.request.get('_route') == 'app_sales_show' %} active
+                                        {% elseif app.request.get('_route') == 'app_sales_delete' %} active
+                                        {% elseif app.request.get('_route') == 'app_purchases' %} active
+                                        {% elseif app.request.get('_route') == 'app_purchases_edit' %} active
+                                        {% elseif app.request.get('_route') == 'app_purchases_show' %} active
+                                        {% elseif app.request.get('_route') == 'app_purchases_new' %} active
+                                        {% elseif app.request.get('_route') == 'app_purchases_delete' %} active
+                                        {% endif %}" 
+                    href="{{ path('app_sales') }}">Transactions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ app.request.get('_route') == '_list' ? 'active' }}" href="#">Storage</a>
+                    <a class="nav-link  {% if app.request.get('_route') == 'app_storage' %} active 
+                                        {% elseif app.request.get('_route') == 'app_storage_new' %} active
+                                        {% elseif app.request.get('_route') == 'app_storage_edit' %} active
+                                        {% elseif app.request.get('_route') == 'app_storage_show' %} active
+                                        {% elseif app.request.get('_route') == 'app_storage_delete' %} active
+                                        {% endif %}" 
+                    href="{{ path('app_storage') }}">Storage</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ app.request.get('_route') == 'app_logout' ? 'active' }}" href="{{ path('app_logout') }}">Sign Out</a>

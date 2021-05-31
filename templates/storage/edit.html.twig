@@ -1,0 +1,15 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}Edit Storage{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card shadow my-4 p-4 mx-5">
+        <div class="d-flex">
+            <h1>Edit {{storage.product}} Storage</h1>
+            <div class="ms-auto">{{ include('storage/_delete_form.html.twig') }}</div>
+        </div>
+        {{ include('storage/_form.html.twig', {'button_label': 'Update'}) }}
+    </div>
+</div>
+{% endblock %}

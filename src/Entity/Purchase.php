@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PurchaseRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PurchaseRepository::class)
@@ -23,11 +22,19 @@ class Purchase
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\PositiveOrZero
      */
     private $quantity;
 
     /**
+     * @ORM\Column(type="integer")
+     * @Assert\PositiveOrZero
+     */
+    private $oldQuantity;
+
+    /**
      * @ORM\Column(type="float")
+     * @Assert\PositiveOrZero
      */
     private $total;
 
@@ -55,6 +62,18 @@ class Purchase
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getOldQuantity(): ?int
+    {
+        return $this->oldQuantity;
+    }
+
+    public function setOldQuantity(int $quantity): self
+    {
+        $this->oldQuantity = $quantity;
 
         return $this;
     }

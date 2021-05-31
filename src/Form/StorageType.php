@@ -3,15 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Product;
-use App\Entity\Purchase;
+use App\Entity\Storage;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PurchaseType extends AbstractType
+class StorageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,20 +19,17 @@ class PurchaseType extends AbstractType
                 "class" => Product::class,
                 "attr" => ["class" => "form-select mb-2"]
             ])
-            ->add('supplyPrice', NumberType::class, [
-                'mapped' => false,
-                'label' => "Acquisition price",
-                'attr' => ["class" => "form-control mb-2",]
+            ->add('location', TextareaType::class, [
+                'required' => false,
+                "attr" => ["class" => "form-control mb-2"]
             ])
-            ->add('quantity', IntegerType::class, ["attr" => [
-                "class" => "form-control mb-2",
-            ]]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Purchase::class,
+            'data_class' => Storage::class,
         ]);
     }
 }

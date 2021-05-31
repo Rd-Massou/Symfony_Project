@@ -6,6 +6,7 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
@@ -33,6 +34,7 @@ class Product
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\PositiveOrZero
      */
     private $price;
 
@@ -66,6 +68,11 @@ class Product
      * @ORM\OneToMany(targetEntity=Purchase::class, mappedBy="product")
      */
     private $purchases;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Storage::class, mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $storage;
 
     public function __construct()
     {
@@ -235,6 +242,23 @@ class Product
                 $purchase->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStorage(): ?Storage
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(Storage $storage): self
+    {
+        // set the owning side of the relation if necessary
+        if ($storage->getProduct() !== $this) {
+            $storage->setProduct($this);
+        }
+
+        $this->storage = $storage;
 
         return $this;
     }

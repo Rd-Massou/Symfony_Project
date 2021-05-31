@@ -7,15 +7,19 @@
     <div class="card shadow my-4 p-4 mx-5">
         <h1>Sale N°{{ sale.id }}</h1>
 
-        <div class="table-responsive p-2 mb-2 rounded" style="border: solid 1px #AAA">
+        <div class="table-responsive mb-2 p-2 rounded">
             <table class="table table-sm">
             <tbody>
                 <tr>
                     <th>Product</th>
-                    <td><img class="mb-3" src="{{ asset('uploads/'~sale.product.image) }}" height="250">
-                        <br>
-                        {{ sale.product }}
+                    <td class="text-center">
+                        <p class="text-uppercase fs-3 fw-bolder">{{ sale.product }}</p>
+                        <img class="mb-3" src="{{ asset('uploads/'~sale.product.image) }}" height="250">
                     </td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ sale.product.description }}</td>
                 </tr>
                 <tr>
                     <th>Quantity</th>

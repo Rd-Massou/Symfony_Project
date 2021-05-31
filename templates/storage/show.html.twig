@@ -1,0 +1,52 @@
+{% extends "layouts/base.html.twig" %}
+
+{% block title %}
+Storage {{ storage.product.title }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="card shadow my-4 p-4 mx-5">
+        <h1>{{storage.product.title}} Storage</h1>
+
+        <div class="table-responsive mb-2 p-2 rounded">
+            <table class="table table-sm">
+            <tbody>
+                <tr>
+                    <th>Image</th>
+                    <td class="text-center">
+                        <img src="{{ asset('uploads/'~storage.product.image) }}" height="250px">
+                    </td>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ storage.product.description }}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ storage.status }}</td>
+                </tr>
+                <tr>
+                    <th>Quantity</th>
+                    <td>{{ storage.quantity }}</td>
+                </tr>
+                <tr>
+                    <th>Location</th>
+                    <td>{{ storage.location }}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="d-flex">
+            <a class="btn btn-primary" href="{{ path('app_storage') }}">Back To List</a>
+            {% for role in user.roles %}
+            {% if role == "ROLE_ADMIN" %}
+            <a class="btn btn-outline-warning mx-1"
+                href="{{ path('app_storage_edit', {'id': storage.product.id}) }}">Edit</a>
+            {{ include('storage/_delete_form.html.twig') }}
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

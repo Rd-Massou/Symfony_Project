@@ -21,6 +21,18 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/role_based_redirect", name="app_redirect")
+     */
+    public function redirecting(): Response
+    {
+        if ($this->getUser()->hasRole('ROLE_ADMIN')){
+            return $this->redirect($this->generateUrl('app_dashboard'));
+        } else {
+            return $this->redirect($this->generateUrl('app_homepage'));
+        }
+    }
+
+    /**
      * @isGranted("ROLE_ADMIN")
      * @Route("/dashboard", name="app_dashboard")
      */

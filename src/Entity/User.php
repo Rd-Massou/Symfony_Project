@@ -126,4 +126,9 @@ class User implements UserInterface
     {
 
     }
+
+    public function hasRole($role)
+    {
+        return in_array($role, $this->getRoles(), true);
+    }
 }

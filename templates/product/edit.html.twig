@@ -5,17 +5,17 @@ Edit Product
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="card shadow mx-5 my-5 p-5">
-            <div class="d-flex">
-                <h1>Edit Product</h1>
-                <div class="ms-auto">
-                    {{ include('product/_delete_form.html.twig') }}
-                </div>
+<div class="container">
+    <div class="card shadow my-4 p-4 mx-5">
+        <div class="d-flex">
+            <h1>Edit Product</h1>
+            <div class="ms-auto">
+                {{ include('product/_delete_form.html.twig') }}
             </div>
-            
-            {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
-            
         </div>
+
+        {{ include('product/_form.html.twig', {'button_label': 'Update'}) }}
+
     </div>
+</div>
 {% endblock %}

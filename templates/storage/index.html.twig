@@ -1,31 +1,31 @@
 {% extends "layouts/base.html.twig" %}
 
-{% block title %}Products{% endblock %}
+{% block title %}Storage{% endblock %}
 
 {% block body %}
 <div class="container">
     <div class="card shadow my-4 p-4 mx-5" style="max-height: 81vh; overflow: scroll;">
-        <h1>Product List</h1>
+        <h1>Storage List</h1>
 
         <div class="table-responsive mb-2 p-2 rounded" style="border: solid 1px #AAA">
             <table class="table table-sm">
                 <tbody>
-                    {% for product in products %}
+                    {% for storage in storages %}
                     <tr>
-                        <td class="text-center"><img src="{{ asset('uploads/'~product.image) }}" height="45px"></td>
-                        <td class="text-center">{{ product.title }}</td>
-                        <td class="text-center">{{ product.price }}</td>
-                        <td class="text-center">{{ product.description }}</td>
-                        <td class="text-center">{{ product.category }}</td>
+                        <td class="text-center"><img src="{{ asset('uploads/'~storage.product.image) }}" height="45px">  </td>
+                        <td class="text-center">{{ storage.product }}</td>
+                        <td class="text-center">{{ storage.status }}</td>
+                        <td class="text-center">{{ storage.quantity }}</td>
+                        <td class="text-center">{{ storage.location }}</td>
                         <td>
                             <div class="d-flex justify-content-center align-items-center">
                                 <a class="btn btn-sm btn-primary"
-                                    href="{{ path('app_products_show', {'id': product.id}) }}">Show</a>
+                                    href="{{ path('app_storage_show', {'id': storage.id}) }}">Show</a>
                                 {% for role in user.roles %}
                                 {% if role == "ROLE_ADMIN" %}
                                 <a class="btn btn-sm mx-1 btn-outline-warning"
-                                    href="{{ path('app_products_edit', {'id': product.id}) }}">Edit</a>
-                                {{ include('product/_delete_form.html.twig') }}
+                                    href="{{ path('app_storage_edit', {'id': storage.id}) }}">Edit</a>
+                                {{ include('storage/_delete_form.html.twig') }}
                                 {% endif %}
                                 {% endfor %}
                             </div>
@@ -33,7 +33,7 @@
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="5" class="text-center">no records found</td>
+                        <td colspan="5">no records found</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -42,7 +42,7 @@
 
         {% for role in user.roles %}
         {% if role == "ROLE_ADMIN" %}
-        <a class="btn btn-success mx-auto w-25" href="{{ path('app_products_new') }}">Create New</a>
+        <a class="btn btn-success mx-auto w-25" href="{{ path('app_storage_new') }}">Create New</a>
         {% endif %}
         {% endfor %}
     </div>
