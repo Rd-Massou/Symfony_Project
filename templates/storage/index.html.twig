@@ -12,9 +12,14 @@
                 <tbody>
                     {% for storage in storages %}
                     <tr>
-                        <td class="text-center"><img src="{{ asset('uploads/'~storage.product.image) }}" height="45px">  </td>
+                        <td class="text-center"><img src="{{ asset('uploads/'~storage.product.image) }}" height="45px">
+                        </td>
                         <td class="text-center">{{ storage.product }}</td>
-                        <td class="text-center">{{ storage.status }}</td>
+                        <td
+                            class="text-center {% if storage.status == 'Ruptured' %} text-danger
+                            {% else %} text-success 
+                            {% endif %}">
+                            {{ storage.status }}</td>
                         <td class="text-center">{{ storage.quantity }}</td>
                         <td class="text-center">{{ storage.location }}</td>
                         <td>

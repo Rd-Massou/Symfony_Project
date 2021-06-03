@@ -23,7 +23,7 @@ Storage {{ storage.product.title }}
                 </tr>
                 <tr>
                     <th>Status</th>
-                    <td>{{ storage.status }}</td>
+                    <td class="{% if storage.status == 'Ruptured' %} text-danger {% else %} text-success {% endif %}">{{ storage.status }}</td>
                 </tr>
                 <tr>
                     <th>Quantity</th>
