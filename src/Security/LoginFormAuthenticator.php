@@ -20,6 +20,9 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+/* Cette class nous permet de gerer les authentification et les redirection de base au sein de notre systeme
+de sécurité
+*/
 class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
@@ -41,48 +44,64 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function supports(Request $request)
     {
+        /* On verifier a chaque page visité si elle est celle de login et que le méthode utilisé est POST pour
+        pouvoire proceder à getCredentials
+        */
         return self::LOGIN_ROUTE === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
     public function getCredentials(Request $request)
     {
+        /* On récupères les identifiants entré par l'utilisateur ainsi que le jeton csrf pour s'assurer qu'il
+        d'agit de données ne prevenant pas d'un attaqueur
+        */
         $credentials = [
             'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
+        /* On initialise la session pour pouvoir passer des données au travers toute notre application
+        */
         $request->getSession()->set(
             Security::LAST_USERNAME,
             $credentials['email']
         );
 
+        // On retourn les identifiants pour un usage ultérieurs dans les fonctions getUser et checkCredentials
         return $credentials;
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        // On verifie la conformité du jeton csrf
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
-
+        /* Si le jeton ne pose pas de problème, on cherche l'utilisateur qui est associé à l'adresse mail
+        que l'utilisateur a saisie lors du login
+        */
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
+            // Si on ne trouve pas de utilisateur avec cette adresse mail, nous jettons une exception
             throw new UsernameNotFoundException('Email could not be found.');
         }
 
+        // Si tout se passe bien, on retourne l'utilisateur concerné
         return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)
     {
+        /* Puisque on fais un encodage au mot de passe, cette fonction verifie si le mot de passe saisie est le
+        que celui qui est hashed dans la base de données.
+        */
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
+    /* Utilisé pour mettre à jour (rehash) le mot de passe de l'utilisateur automatiquement au fil du temps.
      */
     public function getPassword($credentials): ?string
     {
@@ -91,15 +110,15 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
-        }
-
+        /* Si l'authentification réussie; càd que les identifiants entrés sont les bons, nous redirigeons
+        l'utilisateur à la page de redirection deja vu dans le HomeController
+        */
         return new RedirectResponse($this->urlGenerator->generate('app_redirect'));
     }
 
     protected function getLoginUrl()
     {
+        // Dans cette méthode, on retourn la page d'authentification
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

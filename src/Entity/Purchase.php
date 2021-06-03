@@ -114,6 +114,10 @@ class Purchase
         return $this;
     }
 
+    /* Cette méthode nous permet de remplir automatiquement le champ de createdAt sans avoir à le spécifier
+    dans le formulaire.
+    */
+
     /**
      * @ORM\PrePersist
      */

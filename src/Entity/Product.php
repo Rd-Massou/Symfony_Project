@@ -157,6 +157,10 @@ class Product
         return $this;
     }
 
+    /* Cette méthode nous permet de remplir automatiquement les champs de createdAt et updatedAt sans avoir
+    à les spécifier dans le formulaire.
+    */
+    
     /**
      * @ORM\PrePersist
      * @ORM\PreUpdate

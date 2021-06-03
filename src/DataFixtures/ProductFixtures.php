@@ -9,6 +9,9 @@ use Doctrine\Persistence\ObjectManager;
 
 class ProductFixtures extends Fixture
 {
+    /* Cette classe nous permet de populer la base de données par des Produits de teste juste pour voir le
+    fonctionnement de l'application avec des données aritificiel avant de passer en prod
+    */
     private $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository)
